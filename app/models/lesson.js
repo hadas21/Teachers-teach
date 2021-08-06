@@ -13,15 +13,11 @@ const lessonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    units: {
+    unit: {
         type: Number,
         required: true
     },
-    content_url: {
-        type: String,
-        required: true
-    },
-    format: {
+    url: {
         type: String,
         required: true
     },

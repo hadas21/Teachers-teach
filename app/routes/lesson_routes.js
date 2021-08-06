@@ -18,7 +18,7 @@ const Lesson = require('../models/lesson')
 //create
 router.post('/lessons', requireToken, (req, res, next) => {
     //connect user to lesson
-    req.body.lesson.owner = req.user.id
+    req.body.lesson.owner = req.user._id
     const lessonData = req.body.lesson
         //create lesson
     Lesson.create(lessonData)
