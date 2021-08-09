@@ -28,7 +28,19 @@ router.post('/lessons', requireToken, (req, res, next) => {
         .catch(next)
 })
 
-//index
+// //index all users
+// router.get('/lessons', (req, res, next) => {
+//     console.log('hey')
+//     Lesson.find()
+
+//     .then(lessons => {
+//             return lessons.map(lesson => lesson.toObject())
+//         })
+//         .then(lessons => res.status(200).json({ lessons }))
+//         .catch(next)
+// })
+
+//index user
 router.get('/lessons', requireToken, (req, res, next) => {
     Lesson.find({ owner: req.user.id })
         .then(handle404)
@@ -40,6 +52,8 @@ router.get('/lessons', requireToken, (req, res, next) => {
         })
         .catch(next)
 })
+
+
 
 //update
 router.patch('/lessons/:id', requireToken, removeBlanks, (req, res, next) => {
