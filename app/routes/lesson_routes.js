@@ -28,26 +28,23 @@ router.post('/lessons', requireToken, (req, res, next) => {
         .catch(next)
 })
 
-// //index all users
-// router.get('/lessons', (req, res, next) => {
-//     console.log('hey')
-//     Lesson.find()
+//index all users
+router.get('/all', (req, res, next) => {
+    console.log('hey')
+    Lesson.find()
 
-//     .then(lessons => {
-//             return lessons.map(lesson => lesson.toObject())
-//         })
-//         .then(lessons => res.status(200).json({ lessons }))
-//         .catch(next)
-// })
+    // .then(lessons => {
+    //         return lessons.map(lesson => lesson.toObject())
+    //     })
+    .then(lessons => res.status(200).json({ lessons }))
+        .catch(next)
+})
 
 //index user
 router.get('/lessons', requireToken, (req, res, next) => {
     Lesson.find({ owner: req.user.id })
-        .then(handle404)
-        // .then(lessons => {
-        //     return lessons.map(lesson => lesson.toObject())
-        // })
-        .then(lessons => {
+
+    .then(lessons => {
             res.status(200).json({ lessons })
         })
         .catch(next)
@@ -72,7 +69,9 @@ router.patch('/lessons/:id', requireToken, removeBlanks, (req, res, next) => {
             return lesson.updateOne(req.body.lesson)
         })
         // if that succeeded, return 204 and no JSON
-        .then(() => res.sendStatus(204))
+        .then(lesson => {
+            res.status(204).json({ lesson })
+        })
         // if an error occurs, pass it to the handler
         .catch(next)
 })
