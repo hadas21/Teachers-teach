@@ -57,7 +57,7 @@ router.patch('/lessons/:id', requireToken, removeBlanks, (req, res, next) => {
     // if the client attempts to change the `owner` property by including a new
     // owner, prevent that by deleting that key/value pair
     delete req.body.lesson.owner
-
+    const lesson = req.body.lesson
     Lesson.findById(req.params.id)
         .then(handle404)
         .then(lesson => {
@@ -69,8 +69,8 @@ router.patch('/lessons/:id', requireToken, removeBlanks, (req, res, next) => {
             return lesson.updateOne(req.body.lesson)
         })
         // if that succeeded, return 204 and no JSON
-        .then(lesson => {
-            res.status(204).json({ lesson })
+        .then(() => {
+            res.status(200).json({ lesson })
         })
         // if an error occurs, pass it to the handler
         .catch(next)
